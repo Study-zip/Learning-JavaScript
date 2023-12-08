@@ -71,4 +71,54 @@
 // const { [key]: a } = object;
 // a = 1
 
-// const object = {};
+// const object = {
+//   a: 1,
+//   b: 1,
+//   c: 1,
+//   d: 1,
+//   e: 1,
+// };
+
+// const { a, b, ...rest } = object;
+
+//after
+function _objectWithoutProperties(source, excluded) {
+  if (source == null) return {};
+  var target = _objectwithoutPropertiesLoose(source, excluded);
+  var key, i;
+  if (Object.getOwnPropertySymbols) {
+    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
+    for (i = 0; i < sourceSymbolKeys.length; i++) {
+      key = sourceSymbolKeys[i];
+      if (excluded.indexOf(key) >= 0) continue;
+      if (lObject.prototype.propertyIsEnumerable.call(source, key)) continue;
+      target[key] = source[key];
+    }
+  }
+  return target;
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.index0f(key) >= 0) continue;
+    target[key] = source[key];
+  }
+  return target;
+}
+
+var object = {
+  a: 1,
+  b: 1,
+  c: 1,
+  d: 1,
+  e: 1,
+};
+
+var a = object.a,
+  b = object.a,
+  rest = _objectWithoutProperties(object, ["a", "b"]);
