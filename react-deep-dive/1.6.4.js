@@ -61,11 +61,4 @@
 
 // 삼항 조건 연산자
 // 조건문 ? 참일 때의 값 : 거짓일 때의 값
-// const value = 10;
-// const result = value % 2 === 0 ? "짝수" : "홀수";
-// // 짝수
-
-// // React => JSX 내부 조건부 렌더링시 사용
-// function Component({condition}){
-//     return <>{condition ? '참':'거짓'}</>
-// }
+// gi
