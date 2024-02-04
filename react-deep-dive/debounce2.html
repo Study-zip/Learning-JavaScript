@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Debounce Leading Click Example</title>
+    <script>
+      function debounce_leading(func, timeout = 300) {
+        let timer;
+        return (...args) => {
+          if (!timer) {
+            func.apply(this, args);
+          }
+          clearTimeout(timer);
+          timer = setTimeout(() => {
+            timer = undefined;
+          }, timeout);
+        };
+      }
+
+      function onButtonClick() {
+        console.log("Button clicked immediately on first click");
+      }
+
+      const processClick = debounce_leading(() => onButtonClick());
+    </script>
+  </head>
+  <body>
+    <button onclick="processClick()">Click Me</button>
+  </body>
+</html>
