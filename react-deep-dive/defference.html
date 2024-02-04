@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Debounce and Throttle Comparison</title>
+  </head>
+  <body>
+    <button id="testButton">Click Me</button>
+
+    <script>
+      // Debounce (Leading Edge)
+      function debounceLeadingEdge(func, wait) {
+        let timeout;
+        return function () {
+          const context = this;
+          const args = arguments;
+          const callNow = !timeout;
+          clearTimeout(timeout);
+          timeout = setTimeout(() => {
+            timeout = null;
+          }, wait);
+          if (callNow) func.apply(context, args);
+        };
+      }
+
+      // Throttle
+      function throttle(func, limit) {
+        let lastFunc;
+        let lastRan;
+        return function () {
+          const context = this;
+          const args = arguments;
+          if (!lastRan) {
+            func.apply(context, args);
+            lastRan = Date.now();
+          } else {
+            clearTimeout(lastFunc);
+            lastFunc = setTimeout(function () {
+              if (Date.now() - lastRan >= limit) {
+                func.apply(context, args);
+                lastRan = Date.now();
+              }
+            }, limit - (Date.now() - lastRan));
+          }
+        };
+      }
+
+      // Event Handlers
+      function handleDebounceClick() {
+        console.log("Debounce Click");
+      }
+
+      function handleThrottleClick() {
+        console.log("Throttle Click");
+      }
+
+      // Applying Debounce and Throttle
+      const debouncedClick = debounceLeadingEdge(handleDebounceClick, 2000);
+      const throttledClick = throttle(handleThrottleClick, 2000);
+
+      // Adding Event Listener
+      document
+        .getElementById("testButton")
+        .addEventListener("click", function () {
+          debouncedClick();
+          throttledClick();
+        });
+    </script>
+  </body>
+</html>

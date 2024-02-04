@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Throttle Resize Example</title>
+    <script>
+      function throttle(func, limit) {
+        let lastFunc;
+        let lastRan;
+
+        return function () {
+          const context = this;
+          const args = arguments;
+
+          if (!lastRan) {
+            func.apply(context, args);
+            lastRan = Date.now();
+          } else {
+            clearTimeout(lastFunc);
+            lastFunc = setTimeout(function () {
+              if (Date.now() - lastRan >= limit) {
+                func.apply(context, args);
+                lastRan = Date.now();
+              }
+            }, limit - (Date.now() - lastRan));
+          }
+        };
+      }
+
+      function handleResize() {
+        console.log("Resized (throttled)");
+      }
+
+      const throttledResize = throttle(handleResize, 2000);
+    </script>
+  </head>
+  <body>
+    <h1>Resize the window</h1>
+    <script>
+      window.addEventListener("resize", throttledResize);
+    </script>
+  </body>
+</html>
