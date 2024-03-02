@@ -38,6 +38,6 @@ const update = {
   value: "30,000,0000",
 };
 
-update.location = { address: "school" };
+update.location.address = "school";
 console.log(study);
 console.log(update);
